@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
 import { FaSearch } from 'react-icons/fa';
 import { GiConfirmed } from 'react-icons/gi';
 import { MdCancel } from 'react-icons/md';
@@ -9,103 +8,157 @@ import BASE_URL from '../components/BASE_URL';
 
 const Home = () => {
   const [search, setSearch] = useState('');
-  const [Data, setData] = useState('');
-  const [res, setRes] = useState('');
-
+  const [data, setData] = useState(null);
+  const [res, setRes] = useState(null);
   const [show, setShow] = useState(false);
-  const [valid, setValid] = useState(false);
 
   const handleClose = () => {
     setShow(false);
     setSearch('');
-    setValid(false);
   };
+
   const handleSubmit = async e => {
     e.preventDefault();
+    const normalizedSearch = search.toUpperCase().replace(/[\s-]/g, '');
     try {
       const api = `${BASE_URL}/vehicle/search`;
-      const response = await axios.post(api, { search });
-
+      const response = await axios.post(api, { search: normalizedSearch });
       setData(response.data);
       setRes(response);
-
       if (response.status === 201) {
-        setValid(true);
         setShow(true);
       }
     } catch (error) {
       console.log(error);
+      setRes({ status: 200 });
     }
   };
 
   return (
-    <>
-      <div id="HomeImg">
-        <img src={img} />
-      </div>{' '}
-      <hr />
-      <div id="search">
-        <input
-          type="text"
-          placeholder="Enter Vehicle Number"
-          name="vehiclenumber"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-        <button onClick={handleSubmit}>
-          <FaSearch />
-        </button>
-        <br />
+    <div className="max-w-md mx-auto mt-8 px-4 sm:px-6 lg:px-8">
+      <div className="w-full mb-6">
+        <img src={img} alt="Vehicle Validation" className="w-full  h-auto " />
       </div>
-      <div id="valid">
-        {res?.status === 201 &&
-          Data?.vehicleNumber === search &&
-          ((
-            <>
-              <p id="validIcon">
-                <GiConfirmed />
-              </p>
-              <p>Validated</p>
-              <p>Vehicle Detail's Found</p>
-            </>
-          ) || <></>)}
+
+      {/* Search Section */}
+      <div className="w-auto ">
+        <form onSubmit={handleSubmit} className="flex gap-2">
+          <input
+            type="text"
+            placeholder="Enter Vehicle Number or Pass"
+            name="vehiclenumber"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="flex-1 p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 rounded-r-lg flex items-center justify-center hover:bg-blue-600 transition"
+          >
+            <FaSearch />
+          </button>
+        </form>
+
+        {/* Validation Status */}
+        {res?.status === 201 && !show && (
+          <div className="flex items-center gap-2 mt-4 p-3 bg-green-100 text-green-800 rounded shadow">
+            <GiConfirmed size={24} />
+            <div>
+              <p className="font-semibold">Validated</p>
+              <p>Vehicle Details Found</p>
+            </div>
+          </div>
+        )}
+
+        {res?.status === 200 && (
+          <div className="flex items-center gap-2 mt-4 p-3 bg-red-100 text-red-800 rounded shadow">
+            <MdCancel size={24} />
+            <div>
+              <p className="font-semibold">Invalid</p>
+              <p>Vehicle Details Not Found</p>
+            </div>
+          </div>
+        )}
       </div>
-      <div id="invalid">
-        {res.status === 200 &&
-          ((
-            <>
-              <p id="invalidIcon">
-                <MdCancel />
-              </p>
-              <p>Invalid</p>
-              <p>Vehicle Detail's Not Found</p>
-            </>
-          ) || <></>)}
-      </div>
-      <Modal show={show} onHide={handleClose} centered>
+
+      {/* Result Card (replacing modal for better responsiveness) */}
+      {res?.status === 201 && data && (
+        <div className="mt-6 bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="p-6">
+            <h2 className="text-xl font-bold mb-4 text-center">Vehicle Owner Details</h2>
+            <div className="space-y-3">
+              <div className="flex justify-between">
+                <span className="font-semibold">Vehicle Number:</span>
+                <span>{data.vehicleNumber}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold">Vehicle Type:</span>
+                <span>{data.vehicleType}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold">RC Number:</span>
+                <span>{data.rcnumber}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold">Vehicle Owner Name:</span>
+                <span>{data.vehicleOwnerName}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold">Vehicle Owner Contact:</span>
+                <span>{data.vehicleOwnerContact}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold">Alternate Contact:</span>
+                <span>{data.alternateContact}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold">Email:</span>
+                <span>{data.email}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold">Address:</span>
+                <span>{data.address}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold">Flat Owner Name:</span>
+                <span>{data.flateOwnerName}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold">Flat Owner Contact:</span>
+                <span>{data.flatOwnerContact}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold">Valid Date:</span>
+                <span>{data.validDate}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Vehicle Owner Detail</Modal.Title>
+          <Modal.Title>Vehicle Owner Details</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {Data && (
-            <>
-              <h5>Vehicle Number: {Data.vehicleNumber}</h5>
-              <h5>Vehicle Type: {Data.vehicleType}</h5>
-              <h5>RC Number: {Data.rcnumber}</h5>
-              <h5>Vehicle Owner Name: {Data.vehicleOwnerName}</h5>
-              <h5>Vehicle Owner Contact: {Data.vehicleOwnerContact}</h5>
-              <h5>Alternate Contact: {Data.alternateContact}</h5>
-              <h5>Email: {Data.email}</h5>
-              <h5>Address: {Data.address}</h5>
-              <h5>Flat Owner Name: {Data.flateOwnerName}</h5>
-              <h5>Flat Owner Contact: {Data.flatOwnerContact}</h5>
-              <h5>Valid Date: {Data.validDate}</h5>
-            </>
+        <Modal.Body className="max-h-[60vh] overflow-y-auto">
+          {data && (
+            <div className="space-y-2">
+              <p><strong>Vehicle Number:</strong> {data.vehicleNumber}</p>
+              <p><strong>Vehicle Type:</strong> {data.vehicleType}</p>
+              <p><strong>RC Number:</strong> {data.rcnumber}</p>
+              <p><strong>Vehicle Owner Name:</strong> {data.vehicleOwnerName}</p>
+              <p><strong>Vehicle Owner Contact:</strong> {data.vehicleOwnerContact}</p>
+              <p><strong>Alternate Contact:</strong> {data.alternateContact}</p>
+              <p><strong>Email:</strong> {data.email}</p>
+              <p><strong>Address:</strong> {data.address}</p>
+              <p><strong>Flat Owner Name:</strong> {data.flateOwnerName}</p>
+              <p><strong>Flat Owner Contact:</strong> {data.flatOwnerContact}</p>
+              <p><strong>Valid Date:</strong> {data.validDate}</p>
+            </div>
           )}
         </Modal.Body>
-        <Modal.Footer></Modal.Footer>
-      </Modal>
-    </>
+      </Modal> */}
+    </div>
   );
 };
 

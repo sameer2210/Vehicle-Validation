@@ -1,8 +1,8 @@
-# 🚗 Vehicle Validation
+#  Vehicle Validation
 
 Vehicle Validation is a full-stack web application for validating and managing vehicle details such as registration numbers. It helps ensure the correctness of vehicle data before storing, processing, or integrating it with other systems.
 
-## 🌳 Project Structure
+##  Project Structure
 
 ```
 Vehicle-Validation/
