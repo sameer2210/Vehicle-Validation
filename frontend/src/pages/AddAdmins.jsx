@@ -21,9 +21,7 @@ const AddAdmins = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // TODO: Implement add admin logic, e.g., API call
     console.log('New admin data:', formData);
-    // Reset form or show success message
   };
 
   return (

@@ -20,6 +20,7 @@ const Home = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     const normalizedSearch = search.toUpperCase().replace(/[\s-]/g, '');
+
     try {
       const api = `${BASE_URL}/vehicle/search`;
       const response = await axios.post(api, { search: normalizedSearch });
@@ -36,8 +37,8 @@ const Home = () => {
 
   return (
     <div className="max-w-md mx-auto mt-8 px-4 sm:px-6 lg:px-8">
-      <div className="w-full mb-6">
-        <img src={img} alt="Vehicle Validation" className="w-full  h-auto " />
+      <div className="w-full flex justify-center mb-6 ">
+        <img src={img} alt="Vehicle Validation" className="w-36  h-auto sm:w-48" />
       </div>
 
       {/* Search Section */}
@@ -81,7 +82,7 @@ const Home = () => {
         )}
       </div>
 
-      {/* Result Card (replacing modal for better responsiveness) */}
+      {/* Result Card */}
       {res?.status === 201 && data && (
         <div className="mt-6 bg-white rounded-lg shadow-md overflow-hidden">
           <div className="p-6">
@@ -135,29 +136,6 @@ const Home = () => {
           </div>
         </div>
       )}
-
-      {/* <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Vehicle Owner Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="max-h-[60vh] overflow-y-auto">
-          {data && (
-            <div className="space-y-2">
-              <p><strong>Vehicle Number:</strong> {data.vehicleNumber}</p>
-              <p><strong>Vehicle Type:</strong> {data.vehicleType}</p>
-              <p><strong>RC Number:</strong> {data.rcnumber}</p>
-              <p><strong>Vehicle Owner Name:</strong> {data.vehicleOwnerName}</p>
-              <p><strong>Vehicle Owner Contact:</strong> {data.vehicleOwnerContact}</p>
-              <p><strong>Alternate Contact:</strong> {data.alternateContact}</p>
-              <p><strong>Email:</strong> {data.email}</p>
-              <p><strong>Address:</strong> {data.address}</p>
-              <p><strong>Flat Owner Name:</strong> {data.flateOwnerName}</p>
-              <p><strong>Flat Owner Contact:</strong> {data.flatOwnerContact}</p>
-              <p><strong>Valid Date:</strong> {data.validDate}</p>
-            </div>
-          )}
-        </Modal.Body>
-      </Modal> */}
     </div>
   );
 };
