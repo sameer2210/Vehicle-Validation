@@ -1,26 +1,42 @@
 const express = require('express');
 const app = express();
-const cors = require('cors');
-const bodyParser = require('body-parser');
-
-const mongoose = require('mongoose');
 require('dotenv').config();
+const cors = require('cors');
+const PORT = process.env.PORT || 5000;
 
-const VehiclesRoute = require('./routes/VehiclesRoute');
+const authRoutes = require('./routes/authRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+const vehicleRoutes = require('./routes/vehicleRoutes');
 
-app.use(cors());
-// Parse incoming requests with JSON payloads
-app.use(bodyParser.json());
-// Parse incoming requests with urlencoded payloads
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 
-mongoose.connect(process.env.DBCONN).then(() => {
-  console.log('DB connected!!!');
+const db = require('./config/db');
+const initSuperAdmin = require('./utils/initSuperAdmin');
+
+db().then(() => {
+  initSuperAdmin();
 });
 
-app.use('/vehicle', VehiclesRoute);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const Port = process.env.PORT || 8000;
-app.listen(Port, () => {
-  console.log(`server run on  port ${Port}`);
+const morgan = require('morgan');
+app.use(morgan('dev'));
+
+app.use('/api/auth', authRoutes);
+app.use('/api/admins', adminRoutes);
+app.use('/api/vehicles', vehicleRoutes);
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+app.listen(PORT, () => {
+  console.log('Server is running on port :', PORT);
 });
