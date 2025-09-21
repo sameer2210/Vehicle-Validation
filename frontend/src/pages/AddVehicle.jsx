@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BASE_URL from '../components/BASE_URL';
+import { useAuth } from '../contexts/AuthContext';
 
 const AddVehicle = () => {
+  const { token } = useAuth();
   const [input, setInput] = useState({
     vehiclenumber: '',
     vehicletype: '',
@@ -29,10 +31,30 @@ const AddVehicle = () => {
     e.preventDefault();
 
     try {
-      const api = `${BASE_URL}/vehicle/addvehicle`;
-      const response = await axios.post(api, input);
+      // Map frontend data to backend schema
+      const vehicleData = {
+        vehicleNumber: input.vehiclenumber,
+        passNumber: input.vehiclenumber, // Using vehicle number as pass number for now
+        flatNumber: input.flatno,
+        ownerName: input.vehicleownername,
+        dlOrRcNumber: input.rcnumber,
+        ownerContact: input.vehicleownercontact,
+        alternateContact: input.alternatecontact,
+        email: input.email,
+        permanentAddress: input.address,
+        flatOwnerName: input.flatownername,
+        validTill: input.validdate,
+      };
 
-      toast.success(response.data.message || 'Vehicle added successfully!');
+      const api = `${BASE_URL}/api/vehicles`;
+      const response = await axios.post(api, vehicleData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      toast.success('Vehicle added successfully!');
 
       setInput({
         vehiclenumber: '',
@@ -50,7 +72,11 @@ const AddVehicle = () => {
       });
     } catch (error) {
       console.error(error);
-      toast.error('Failed to add vehicle. Please try again.');
+      if (error.response?.status === 401) {
+        toast.error('Please login first.');
+      } else {
+        toast.error('Failed to add vehicle. Please try again.');
+      }
     }
   };
 

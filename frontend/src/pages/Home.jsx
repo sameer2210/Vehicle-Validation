@@ -93,32 +93,8 @@ const Home = () => {
                 <span>{data.vehicleNumber}</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-semibold">Vehicle Type:</span>
-                <span>{data.vehicleType}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-semibold">RC Number:</span>
-                <span>{data.rcnumber}</span>
-              </div>
-              <div className="flex justify-between">
                 <span className="font-semibold">Vehicle Owner Name:</span>
                 <span>{data.vehicleOwnerName}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-semibold">Vehicle Owner Contact:</span>
-                <span>{data.vehicleOwnerContact}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-semibold">Alternate Contact:</span>
-                <span>{data.alternateContact}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-semibold">Email:</span>
-                <span>{data.email}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-semibold">Address:</span>
-                <span>{data.address}</span>
               </div>
               <div className="flex justify-between">
                 <span className="font-semibold">Flat Owner Name:</span>
@@ -128,6 +104,21 @@ const Home = () => {
                 <span className="font-semibold">Flat Owner Contact:</span>
                 <span>{data.flatOwnerContact}</span>
               </div>
+
+              <div className="flex justify-between">
+                <span className="font-semibold">Vehicle Owner Contact:</span>
+                <span>{data.vehicleOwnerContact}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold">Alternate Contact:</span>
+                <span>{data.alternateContact}</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span className="font-semibold">Address:</span>
+                <span>{data.address}</span>
+              </div>
+
               <div className="flex justify-between">
                 <span className="font-semibold">Valid Date:</span>
                 <span>{data.validDate}</span>

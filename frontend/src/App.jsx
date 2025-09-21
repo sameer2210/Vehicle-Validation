@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 import AppLayout from './layouts/AppLayout';
 import PublicLayout from './layouts/PublicLayout';
 
@@ -12,27 +13,29 @@ import Update from './pages/Update';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public routes */}
-        <Route element={<PublicLayout />}>
-          <Route index element={<Home />} />
-          <Route path="home" element={<Home />} />
-          <Route path="addvehicle" element={<AddVehicle />} />
-          <Route path="display" element={<Display />} />
-          <Route path="update" element={<Update />} />
-          <Route path="login" element={<Login />} />
-        </Route>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public routes */}
+          <Route element={<PublicLayout />}>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="login" element={<Login />} />
+          </Route>
 
-        {/* Private/App routes */}
-        <Route element={<AppLayout />}>
-          <Route path="add-admins" element={<AddAdmins />} />
-        </Route>
+          {/* Private/App routes */}
+          <Route element={<AppLayout />}>
+            <Route path="update" element={<Update />} />
+            <Route path="display" element={<Display />} />
+            <Route path="addvehicle" element={<AddVehicle />} />
+            <Route path="add-admins" element={<AddAdmins />} />
+          </Route>
 
-        {/* Fallback */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+          {/* Fallback */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 };
 

@@ -1,54 +1,114 @@
+import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import BASE_URL from '../components/BASE_URL';
+import { useAuth } from '../contexts/AuthContext';
 
 const Login = () => {
   const [mobileNumber, setMobileNumber] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
+  const navigate = useNavigate();
+  // const { login } = useAuth();
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
-    console.log('Login attempt with:', { mobileNumber, password });
+    try {
+      const response = await axios.post(`${BASE_URL}/api/auth/login`, {
+        mobile: mobileNumber,
+        password: password,
+        role: role,
+      });
+
+      // Store token and user info using auth context
+      login(
+        {
+          id: response.data._id,
+          name: response.data.name,
+          role: response.data.role,
+        },
+        response.data.token
+      );
+
+      toast.success('Login successful!');
+      navigate('/');
+    } catch (error) {
+      console.error('Login error:', error);
+      toast.error(error.response?.data?.message || 'Login failed. Please try again.');
+    }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 py-6 px-8 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="mobile" className="block text-sm font-medium text-gray-700 mb-1">
-            Mobile Number
-          </label>
-          <input
-            type="tel"
-            id="mobile"
-            value={mobileNumber}
-            onChange={e => setMobileNumber(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your mobile number"
-            required
-          />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-2xl p-8">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Vehicle Management</h1>
+          {/* <p className="text-gray-600">Ganpati Infinity Society</p> */}
+          <div className="w-16 h-1 bg-blue-600 mx-auto mt-4 rounded"></div>
         </div>
-        <div className="mb-6">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-            Password
+
+        <div>
+          <label htmlFor="role" className="block text-sm font-semibold text-gray-700 mb-2">
+            Select Role
           </label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your password"
+          <select
+            id="role"
+            value={role}
+            onChange={e => setRole(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             required
-          />
+          >
+            <option value="">Choose your role</option>
+            <option value="superadmin">Super Admin</option>
+            <option value="admin">Admin</option>
+            <option value="guard">Guard</option>
+          </select>
         </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
-        >
-          Login
-        </button>
-      </form>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label htmlFor="mobile" className="block text-sm font-semibold text-gray-700 mb-2">
+              Mobile Number
+            </label>
+            <input
+              type="tel"
+              id="mobile"
+              value={mobileNumber}
+              onChange={e => setMobileNumber(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              placeholder="Enter your mobile number"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-4 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+          >
+            Login
+          </button>
+        </form>
+
+        <ToastContainer />
+      </div>
     </div>
   );
 };
