@@ -12,7 +12,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full bg-gray-900 text-gray-200 px-4 py-6">
+    <footer className="w-full bg-gray-900 text-gray-200 px-3 py-4">
       {/* Navigation */}
       <nav className="flex justify-center space-x-4 sm:space-x-8 mb-6 flex-wrap gap-y-4">
         {navigation.map(item => {
@@ -31,8 +31,8 @@ const Footer = () => {
       </nav>
 
       {/* Address */}
-      <p className="flex items-center justify-center text-sm text-center max-w-md mx-auto">
-        <FaLocationDot className="mr-2 text-red-400 shrink-0" />
+      <p className="flex justify-center text-sm text-center">
+        <FaLocationDot className=" text-red-400 mt-1 mr-1 shrink-0" />
         8948+FP, Abbas Nagar, Gandhi Nagar, Bhopal, Madhya Pradesh 462036
       </p>
     </footer>

@@ -9,7 +9,6 @@ const AddVehicle = () => {
   const { token } = useAuth();
   const [input, setInput] = useState({
     vehiclenumber: '',
-    passnumber:'',
     vehicletype: '',
     vehicleownername: '',
     flatno: '',
@@ -35,7 +34,7 @@ const AddVehicle = () => {
       // Map frontend data to backend schema
       const vehicleData = {
         vehicleNumber: input.vehiclenumber,
-        passNumber: input.passnumber,
+        passNumber: input.vehiclenumber, // Using vehicle number as pass number for now
         flatNumber: input.flatno,
         ownerName: input.vehicleownername,
         dlOrRcNumber: input.rcnumber,
@@ -50,16 +49,15 @@ const AddVehicle = () => {
       const api = `${BASE_URL}/api/vehicles`;
       const response = await axios.post(api, vehicleData, {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       });
 
       toast.success('Vehicle added successfully!');
 
       setInput({
         vehiclenumber: '',
-        passnumber:'',
         vehicletype: '',
         vehicleownername: '',
         flatno: '',
@@ -97,19 +95,6 @@ const AddVehicle = () => {
             placeholder="Vehicle Number"
             name="vehiclenumber"
             value={input.vehiclenumber}
-            onChange={handleInput}
-            required
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <span className="text-red-500 ml-1">*</span>
-        </div>
-
-        <div>
-          <input
-            type="number"
-            placeholder="Pass Number"
-            name="passnumber"
-            value={input.passnumber}
             onChange={handleInput}
             required
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"

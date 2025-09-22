@@ -10,7 +10,7 @@ const vehicleSchema = new mongoose.Schema(
     alternateContact: { type: String },
     email: { type: String },
     permanentAddress: { type: String },
-    flatOwnerName: { type: String }, // if rented
+    flatOwnerName: { type: String }, 
     validTill: { type: Date, required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },
