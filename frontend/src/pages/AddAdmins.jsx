@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BASE_URL from '../components/BASE_URL';
-// import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 
 const AddAdmins = () => {
   const { token } = useAuth();
@@ -31,9 +31,9 @@ const AddAdmins = () => {
     try {
       const response = await axios.post(`${BASE_URL}/api/auth/register`, formData, {
         headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       });
 
       toast.success('User created successfully!');

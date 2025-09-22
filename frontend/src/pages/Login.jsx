@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const navigate = useNavigate();
-  // const { login } = useAuth();
+  const { login } = useAuth();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -42,9 +42,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-xl shadow-2xl p-8">
-        <div className="text-center mb-8">
+    <div className=" bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-2xl px-8 py-6">
+        <div className="text-center mb-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Vehicle Management</h1>
           {/* <p className="text-gray-600">Ganpati Infinity Society</p> */}
           <div className="w-16 h-1 bg-blue-600 mx-auto mt-4 rounded"></div>
@@ -68,7 +68,7 @@ const Login = () => {
           </select>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-2">
           <div>
             <label htmlFor="mobile" className="block text-sm font-semibold text-gray-700 mb-2">
               Mobile Number
@@ -101,11 +101,22 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-4 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="w-full mt-3 bg-gradient-to-r  from-blue-600 to-blue-700 text-white py-3 px-4 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             Login
           </button>
         </form>
+
+        {/* <div className="mt-8 text-center">
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <h3 className="text-sm font-semibold text-yellow-800 mb-2">Default Super Admin</h3>
+            <p className="text-xs text-yellow-700">
+              Mobile: <span className="font-mono">1234567890</span>
+              <br />
+              Password: <span className="font-mono">admin123</span>
+            </p>
+          </div>
+        </div> */}
 
         <ToastContainer />
       </div>

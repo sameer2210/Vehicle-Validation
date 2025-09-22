@@ -49,9 +49,9 @@ const AddVehicle = () => {
       const api = `${BASE_URL}/api/vehicles`;
       const response = await axios.post(api, vehicleData, {
         headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       });
 
       toast.success('Vehicle added successfully!');
