@@ -16,6 +16,7 @@ exports.getVehicles = async (req, res) => {
   }
 };
 exports.getVehicleById = async (req, res) => {
+     console.log('getVehicleById called with ID:', req.params.id);
   try {
     const vehicle = await Vehicle.findById(req.params.id);
     if (!vehicle) {

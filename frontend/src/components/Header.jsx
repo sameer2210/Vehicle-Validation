@@ -23,7 +23,7 @@ const Header = () => {
           {user && (
             <div className="flex items-center space-x-4">
               <span className="text-white text-sm">
-                Welcome, {user.name} ({user.role})
+                Welcome, {user.name}
               </span>
               <button
                 onClick={handleLogout}
