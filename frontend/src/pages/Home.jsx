@@ -52,7 +52,7 @@ const Home = () => {
         <img
           src={img}
           alt="Vehicle Validation"
-          className="w-30 h-auto xs:w-36 sm:w-40 md:w-52 lg:w-58 max-w-full"
+          className="w-50 h-auto  sm:w-60 md:w-64 lg:w-70 max-w-full"
         />
       </div>
 
@@ -83,87 +83,76 @@ const Home = () => {
 
       {/* Vehicle Found Box */}
       {res?.status === 200 && (
-        <div
-          onClick={() => setShow(true)}
-          className="flex items-center gap-3 p-3 sm:p-4 bg-green-100 text-green-800 rounded-lg shadow cursor-pointer hover:bg-green-200 transition-colors"
-        >
-          <GiConfirmed className="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0" />
-          <div>
-            <p className="font-semibold text-sm sm:text-base">Vehicle Found</p>
-            <p className="text-xs sm:text-sm opacity-90">Click to view details</p>
+        <div className="w-full max-w-[70%] mx-auto">
+          <div
+            onClick={() => setShow(true)}
+            className="flex flex-col justify-center items-center gap-2 xs:gap-3 p-2 xs:p-3 sm:p-4 mb-3 bg-green-100 rounded-lg shadow cursor-pointer hover:bg-green-300 border border-green-300 transition-all duration-200"
+          >
+            <GiConfirmed className="w-8 h-8 xs:w-10 xs:h-10 sm:w-12 sm:h-12 flex-shrink-0 text-green-600" />
+            <h6 className="font-bold text-2xl xs:text-sm sm:text-base">Valid</h6>
+            <p className="font-semibold text-xs xs:text-sm sm:text-base">Details Found</p>
           </div>
         </div>
       )}
 
       {/* Vehicle Not Found */}
       {res?.status === 404 && (
-        <div className="flex items-center gap-3 p-3 sm:p-4 bg-red-100 text-red-800 rounded-lg shadow">
-          <MdCancel className="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0" />
-          <div>
-            <p className="font-semibold text-sm sm:text-base">Vehicle Not Found</p>
-            <p className="text-xs sm:text-sm opacity-90">No details available</p>
+        <div className="w-full max-w-[70%] mx-auto">
+          <div className="flex flex-col justify-center items-center gap-3 mb-2 p-3 sm:p-4 bg-red-100 text-red-800 rounded-lg shadow">
+            <MdCancel className="w-8 h-8 xs:w-10 xs:h-10 sm:w-12 sm:h-12 flex-shrink-0 text-red-600" />
+            <div>
+              <p className="font-bold text-xl xs:text-sm sm:text-base">Vehicle Not Found</p>
+            </div>
           </div>
         </div>
       )}
 
       {/* Modal */}
+
       {show && data && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-3">
-          <div className="bg-white rounded-lg w-full max-w-sm sm:max-w-md max-h-[80vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b p-3 sm:p-4 flex items-center justify-between">
-              <h2 className="font-bold text-base sm:text-lg">Vehicle Details</h2>
-              <button onClick={() => setShow(false)} className="text-gray-500 hover:text-gray-700">
-                <MdCancel className="w-5 h-5 sm:w-6 sm:h-6" />
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2">
+          <div className="bg-white rounded-lg w-full max-w-[80%] xs:max-w-sm sm:max-w-md max-h-[70vh] overflow-y-auto relative">
+            <div className="sticky top-0 bg-white border-b p-2 xs:p-3 sm:p-4 flex items-center justify-center">
+              <span className="text-lg xs:text-xl font-bold">{data.vehicleNumber}</span>
+              <button
+                onClick={() => setShow(false)}
+                className="absolute top-2 right-2 xs:top-3 xs:right-3 text-gray-500 hover:text-gray-700"
+              >
+                <MdCancel className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6" />
               </button>
             </div>
 
-            <div className="p-3 sm:p-4 space-y-3">
-              <div className="flex justify-center items-center">
-                <span className="text-xl font-bold sm:text-base ">{data.vehicleNumber}</span>
+            <div className="p-2 xs:p-3 sm:p-4 space-y-2 xs:space-y-3">
+              <div className="flex items-center justify-center space-x-8 xs:space-x-12 sm:space-x-16">
+                <span className=" xs:text-sm text-gray-600">Owner Name</span>
+                <span className="xs:text-sm sm:text-base">{data.ownerName}</span>
               </div>
 
-              <div>
-                <span className="block font-semibold text-xs sm:text-sm text-gray-600">
-                  Owner Name
-                </span>
-                <span className="text-sm sm:text-base">{data.ownerName}</span>
+              <div className="flex items-center justify-center space-x-8 xs:space-x-12 sm:space-x-16">
+                <span className="  xs:text-sm text-gray-600">Owner Contact</span>
+                <span className=" xs:text-sm sm:text-base">{data.ownerContact}</span>
               </div>
 
-              <div>
-                <span className="block font-semibold text-xs sm:text-sm text-gray-600">
-                  Owner Contact
-                </span>
-                <span className="text-sm sm:text-base">{data.ownerContact}</span>
+              <div className="flex items-center justify-center space-x-8 xs:space-x-12 sm:space-x-16">
+                <span className="  xs:text-sm text-gray-600">Alternate Contact</span>
+                <span className=" xs:text-sm sm:text-base">{data.alternateContact}</span>
               </div>
 
-              <div>
-                <span className="block font-semibold text-xs sm:text-sm text-gray-600">
-                  Alternate Contact
-                </span>
-                <span className="text-sm sm:text-base">{data.alternateContact}</span>
-              </div>
-
-              <div>
-                <span className="block font-semibold text-xs sm:text-sm text-gray-600">
-                  Flat Owner
-                </span>
-                <span className="text-sm sm:text-base">{data.flatOwnerName}</span>
+              <div className="flex items-center justify-center space-x-8 xs:space-x-12 sm:space-x-16">
+                <span className="  xs:text-sm text-gray-600">Flat Owner</span>
+                <span className=" xs:text-sm sm:text-base">{data.flatOwnerName}</span>
               </div>
 
               {data.flatOwnerContact && (
-                <div>
-                  <span className="block font-semibold text-xs sm:text-sm text-gray-600">
-                    Flat Owner Contact
-                  </span>
-                  <span className="text-sm sm:text-base">{data.flatOwnerContact}</span>
+                <div className="flex items-center justify-center space-x-8 xs:space-x-12 sm:space-x-16">
+                  <span className="  xs:text-sm text-gray-600">Flat Owner Contact</span>
+                  <span className=" xs:text-sm sm:text-base">{data.flatOwnerContact}</span>
                 </div>
               )}
 
-              <div>
-                <span className="block font-semibold text-xs sm:text-sm text-gray-600">
-                  Valid Till
-                </span>
-                <span className="text-sm sm:text-base">
+              <div className="flex items-center justify-center space-x-8 xs:space-x-12 sm:space-x-16">
+                <span className="  xs:text-sm text-gray-600">Valid Till</span>
+                <span className=" xs:text-sm sm:text-base">
                   {new Date(data.validTill).toLocaleDateString()}
                 </span>
               </div>
