@@ -20,7 +20,7 @@ const initSuperAdmin = async () => {
     });
 
     console.log(' Static Super Admin created successfully!');
-    console.log(' Mobile: 9999999999');
+    console.log(' Mobile: 1234567890');
     console.log(' Password: admin123');
     console.log(' Role: superadmin');
   } catch (error) {

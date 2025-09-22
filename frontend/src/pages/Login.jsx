@@ -58,10 +58,10 @@ const Login = () => {
             id="role"
             value={role}
             onChange={e => setRole(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            className="w-full px-4 py-2 mb-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             required
           >
-            <option value="">Choose your role</option>
+            <option value=""> Are You ? </option>
             <option value="superadmin">Super Admin</option>
             <option value="admin">Admin</option>
             <option value="guard">Guard</option>
@@ -101,7 +101,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full mt-3 bg-gradient-to-r  from-blue-600 to-blue-700 text-white py-3 px-4 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="w-full mt-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-4 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             Login
           </button>

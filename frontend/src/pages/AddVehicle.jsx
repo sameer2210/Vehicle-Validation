@@ -9,6 +9,7 @@ const AddVehicle = () => {
   const { token } = useAuth();
   const [input, setInput] = useState({
     vehiclenumber: '',
+    passnumber:'',
     vehicletype: '',
     vehicleownername: '',
     flatno: '',
@@ -34,7 +35,7 @@ const AddVehicle = () => {
       // Map frontend data to backend schema
       const vehicleData = {
         vehicleNumber: input.vehiclenumber,
-        passNumber: input.vehiclenumber, // Using vehicle number as pass number for now
+        passNumber: input.passnumber,
         flatNumber: input.flatno,
         ownerName: input.vehicleownername,
         dlOrRcNumber: input.rcnumber,
@@ -58,6 +59,7 @@ const AddVehicle = () => {
 
       setInput({
         vehiclenumber: '',
+        passnumber:'',
         vehicletype: '',
         vehicleownername: '',
         flatno: '',
@@ -95,6 +97,19 @@ const AddVehicle = () => {
             placeholder="Vehicle Number"
             name="vehiclenumber"
             value={input.vehiclenumber}
+            onChange={handleInput}
+            required
+            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <span className="text-red-500 ml-1">*</span>
+        </div>
+
+        <div>
+          <input
+            type="number"
+            placeholder="Pass Number"
+            name="passnumber"
+            value={input.passnumber}
             onChange={handleInput}
             required
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
