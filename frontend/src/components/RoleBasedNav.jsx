@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const RoleBasedNav = () => {
@@ -33,36 +33,7 @@ const RoleBasedNav = () => {
 
   const navItems = getNavItems();
 
-  return (
-    <nav className="bg-gray-800 text-white">
-      {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-8">
-            {navItems.map(item => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isActive(item.path)
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                }`}
-              >
-                <span className="mr-2">{item.icon}</span>
-                {item.label}
-              </Link>
-            ))}
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <span className="text-sm text-gray-300">
-              {user.name} ({user.role})
-            </span>
-          </div>
-        </div>
-      </div> */}
-    </nav>
-  );
+  return <nav></nav>;
 };
 
 export default RoleBasedNav;

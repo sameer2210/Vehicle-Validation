@@ -31,7 +31,6 @@ app.use(
   })
 );
 
-
 const db = require('./config/db');
 const initSuperAdmin = require('./utils/initSuperAdmin');
 
