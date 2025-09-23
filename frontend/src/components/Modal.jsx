@@ -18,7 +18,7 @@ const Modal = ({ isOpen, title, description, confirmText = 'OK', onConfirm, canc
         )}
         <div className="px-4 py-3 flex gap-2  justify-center">
           {cancelText && (
-            <button onClick={onCancel} className="px-4 py-2 text-black rounded border-2 border-black border-gray-300 hover:bg-gray-50">
+            <button onClick={onCancel} className="px-4 py-2 text-black rounded border-2 border-black  hover:bg-gray-50">
               {cancelText}
             </button>
           )}

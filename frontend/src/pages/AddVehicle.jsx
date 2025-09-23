@@ -6,6 +6,7 @@ import BASE_URL from '../components/BASE_URL';
 import { useAuth } from '../contexts/AuthContext';
 
 const AddVehicle = () => {
+  const [errors, setErrors] = useState({});
   const { token } = useAuth();
   const [input, setInput] = useState({
     vehiclenumber: '',
@@ -25,16 +26,35 @@ const AddVehicle = () => {
 
   const handleInput = e => {
     const { name, value } = e.target;
-    setInput(prev => ({ ...prev, [name]: value }));
+
+    if (name === 'vehiclenumber') {
+      // let user type freely (spaces/lowercase allowed)
+      setInput(prev => ({ ...prev, [name]: value }));
+      // clear validation while typing
+      setErrors(prev => ({ ...prev, vehiclenumber: '' }));
+    } else {
+      setInput(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
 
+    // format vehicle number before sending
+    const formattedVehicleNumber = input.vehiclenumber.toUpperCase().replace(/\s+/g, '');
+
+    const regex = /^[A-Z]{2}[0-9]{1,2}[A-Z]{1,2}[0-9]{4}$/;
+    if (!regex.test(formattedVehicleNumber)) {
+      setErrors(prev => ({
+        ...prev,
+        vehiclenumber: 'Invalid vehicle number format (e.g. MH12AB1234)',
+      }));
+      return;
+    }
+
     try {
-      // Map frontend data to backend schema
       const vehicleData = {
-        vehicleNumber: input.vehiclenumber,
+        vehicleNumber: formattedVehicleNumber,
         passNumber: input.passnumber,
         flatNumber: input.flatno,
         ownerName: input.vehicleownername,
@@ -49,7 +69,7 @@ const AddVehicle = () => {
       };
 
       const api = `${BASE_URL}/api/vehicles`;
-      const response = await axios.post(api, vehicleData, {
+      await axios.post(api, vehicleData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -101,13 +121,20 @@ const AddVehicle = () => {
           <span className="text-red-500 z-1 absolute text-xs">*</span>
           <input
             type="text"
-            placeholder="Vehicle Number"
+            placeholder="Vehicle Number (e.g. MH12AB1234)"
             name="vehiclenumber"
             value={input.vehiclenumber}
             onChange={handleInput}
             required
-            className="w-full p-2 xs:p-3 text-xs xs:text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full p-2 xs:p-3 text-xs xs:text-sm border rounded focus:outline-none focus:ring-2 ${
+              errors.vehiclenumber
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-gray-300 focus:ring-blue-500'
+            }`}
           />
+          {errors.vehiclenumber && (
+            <p className="text-red-500 text-xs mt-1">{errors.vehiclenumber}</p>
+          )}
         </div>
 
         <div>

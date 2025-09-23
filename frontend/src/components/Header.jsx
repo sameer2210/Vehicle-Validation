@@ -25,9 +25,9 @@ const Header = () => {
             </p>
           </div>
 
-          {/* User Section - Always in right corner */}
+          {/* User Section  */}
           {user && (
-            <div className="flex items-center space-x-2 sm:space-x-3 ml-2 sm:ml-4">
+            <div className="flex flex-col items-end ml-2 sm:ml-4">
               <button
                 onClick={handleLogout}
                 className="bg-red-500 hover:bg-red-600 text-white p-1.5 sm:p-2 rounded transition-colors group"
@@ -37,6 +37,14 @@ const Header = () => {
               </button>
             </div>
           )}
+        </div>
+        <div className=" text-left flex items-center">
+          <div className="text-white text-xs sm:text-sm font-semibold leading-tight">
+            {user?.name || 'User'}
+          </div>
+          <div className="text-yellow-400 text-[8px] sm:text-xs leading-tight capitalize">
+            ({user?.role || ''})
+          </div>
         </div>
       </div>
     </header>

@@ -60,7 +60,15 @@ const Home = () => {
           type="text"
           placeholder={'Enter Vehicle Number'}
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={e => {
+            const value = e.target.value;
+            setSearch(value);
+            if (status !== 0 || data || show) {
+              setStatus(0);
+              setData(null);
+              if (show) setShow(false);
+            }
+          }}
           className={`flex-1 p-2 sm:p-3 text-sm sm:text-base border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white`}
         />
         <button

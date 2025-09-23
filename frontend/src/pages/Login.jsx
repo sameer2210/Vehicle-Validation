@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BASE_URL from '../components/BASE_URL';
+import PasswordInput from '../components/PasswordInput';
 import { useAuth } from '../contexts/AuthContext';
 
 const Login = () => {
@@ -46,7 +47,6 @@ const Login = () => {
       <div className="max-w-md w-full bg-white rounded-xl shadow-2xl px-8 py-6">
         <div className="text-center mb-">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Login </h1>
-          {/* <p className="text-gray-600">Ganpati Infinity Society</p> */}
           <div className="w-16 h-1 bg-blue-600 mx-auto mt-4 rounded"></div>
         </div>
 
@@ -84,20 +84,7 @@ const Login = () => {
             />
           </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
+          <PasswordInput value={password} onChange={e => setPassword(e.target.value)} />
 
           <button
             type="submit"

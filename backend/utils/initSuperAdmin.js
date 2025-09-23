@@ -10,7 +10,7 @@ const initSuperAdmin = async () => {
     }
 
     const superAdmin = await User.create({
-      name: 'Super Administrator',
+      name: 'Super Admin',
       mobile: '1234567890',
       password: 'admin123',
       role: 'superadmin',
