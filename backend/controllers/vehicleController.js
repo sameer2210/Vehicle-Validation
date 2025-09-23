@@ -64,8 +64,8 @@ exports.searchVehicle = async (req, res) => {
     const pattern = normalized.split('').join('[\\s-]*');
     const regex = new RegExp(pattern, 'i');
 
+    // Allow all authenticated roles to search across all vehicles
     const vehicle = await Vehicle.findOne({
-      createdBy: req.user._id,
       $or: [{ vehicleNumber: regex }, { passNumber: regex }],
     });
 
@@ -78,46 +78,3 @@ exports.searchVehicle = async (req, res) => {
     res.status(500).json({ message: 'Failed to search vehicle', error: error.message });
   }
 };
-
-
-
-
-
-// exports.searchVehicle = async (req, res) => {
-//   try {
-//     const { query } = req.query;
-
-//     console.log('Search query received:', query);
-//     console.log('User from middleware:', req.user);
-
-//     if (!query) {
-//       return res.status(400).json({ message: 'Query parameter is required' });
-//     }
-
-//     // Normalize the search query (remove spaces and hyphens, uppercase)
-//     const normalizedQuery = query.toUpperCase().replace(/[\s-]/g, '');
-//     console.log('Normalized query:', normalizedQuery);
-
-//     // Search for vehicle
-//     const vehicle = await Vehicle.findOne({
-//       $or: [
-//         { vehicleNumber: normalizedQuery },
-//         { vehicleNumber: query },
-//         { vehicleNumber: query.toUpperCase() },
-//         { vehicleNumber: { $regex: new RegExp(normalizedQuery, 'i') } }
-//       ]
-//     });
-
-//     if (!vehicle) {
-//       console.log('Vehicle not found for query:', query);
-//       return res.status(404).json({ message: 'Vehicle not found' });
-//     }
-
-//     console.log('Vehicle found:', vehicle.vehicleNumber);
-//     res.status(200).json(vehicle);
-
-//   } catch (error) {
-//     console.error('Search error:', error);
-//     res.status(500).json({ message: 'Server error', error: error.message });
-//   }
-// };

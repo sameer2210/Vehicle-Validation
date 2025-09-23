@@ -6,12 +6,14 @@ import BASE_URL from '../components/BASE_URL';
 import { useAuth } from '../contexts/AuthContext';
 
 const AddAdmins = () => {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
+  const isSuperAdmin = user?.role === 'superadmin';
+  const isAdmin = user?.role === 'admin';
   const [formData, setFormData] = useState({
     name: '',
     mobile: '',
     password: '',
-    role: 'admin',
+    role: isAdmin ? 'guard' : 'admin',
     address: '',
     designation: '',
     email: '',
@@ -19,6 +21,10 @@ const AddAdmins = () => {
 
   const handleChange = e => {
     const { name, value } = e.target;
+    // Enforce role for admins
+    if (name === 'role' && isAdmin) {
+      return; // ignore attempts to change role when admin
+    }
     setFormData(prev => ({
       ...prev,
       [name]: value,
@@ -28,12 +34,18 @@ const AddAdmins = () => {
   const handleSubmit = async e => {
     e.preventDefault();
 
+    // Force payload role for admins
+    const payload = {
+      ...formData,
+      role: isAdmin ? 'guard' : formData.role,
+    };
+
     try {
-      const response = await axios.post(`${BASE_URL}/api/auth/register`, formData, {
+      const response = await axios.post(`${BASE_URL}/api/auth/register`, payload, {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       });
 
       toast.success('User created successfully!');
@@ -41,7 +53,7 @@ const AddAdmins = () => {
         name: '',
         mobile: '',
         password: '',
-        role: 'admin',
+        role: isAdmin ? 'guard' : 'admin',
         address: '',
         designation: '',
         email: '',
@@ -96,14 +108,20 @@ const AddAdmins = () => {
             <select
               id="role"
               name="role"
-              value={formData.role}
+              value={isAdmin ? 'guard' : formData.role}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
+              disabled={isAdmin}
             >
               <option value="admin">Admin</option>
               <option value="guard">Guard</option>
             </select>
+            {isAdmin && (
+              <p className="text-xs text-gray-500 mt-1 text-center">
+                Admins can only create Guard users.
+              </p>
+            )}
           </div>
 
           <div>

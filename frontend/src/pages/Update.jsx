@@ -15,9 +15,9 @@ const Update = () => {
       const api = `${BASE_URL}/api/vehicles`;
       const response = await axios.get(api, {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       });
       setData(response.data);
     } catch (error) {
@@ -29,17 +29,18 @@ const Update = () => {
   };
 
   useEffect(() => {
+    if (!token) return;
     getData();
-  }, []);
+  }, [token]);
 
   const deleteData = async id => {
     try {
       const api = `${BASE_URL}/api/vehicles/${id}`;
       const response = await axios.delete(api, {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       });
       toast.success('Vehicle deleted successfully!');
       getData();
@@ -80,8 +81,7 @@ const Update = () => {
                   <span className="font-medium">Owner Name:</span> {item.ownerName}
                 </p>
                 <p className="text-sm text-gray-600">
-                  <span className="font-medium">Owner Contact:</span>{' '}
-                  {item.ownerContact}
+                  <span className="font-medium">Owner Contact:</span> {item.ownerContact}
                 </p>
                 <p className="text-sm text-gray-600">
                   <span className="font-medium">Address:</span> {item.permanentAddress}
@@ -93,7 +93,8 @@ const Update = () => {
                   <span className="font-medium">Flat Owner Name:</span> {item.flatOwnerName}
                 </p>
                 <p className="text-sm text-gray-600">
-                  <span className="font-medium">Valid Till:</span> {new Date(item.validTill).toLocaleDateString()}
+                  <span className="font-medium">Valid Till:</span>{' '}
+                  {new Date(item.validTill).toLocaleDateString()}
                 </p>
               </div>
               <button

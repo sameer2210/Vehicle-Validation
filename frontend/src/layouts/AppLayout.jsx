@@ -2,15 +2,13 @@ import { Outlet } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import ProtectedRoute from '../components/ProtectedRoute';
-// import RoleBasedNav from '../components/RoleBasedNav';
 
 const AppLayout = () => {
   return (
     <ProtectedRoute>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen">
         <Header />
-        {/* <RoleBasedNav /> */}
-        <main className="flex-1">
+        <main>
           <Outlet />
         </main>
         <Footer />
