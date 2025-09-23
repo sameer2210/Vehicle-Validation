@@ -42,7 +42,7 @@ const Login = () => {
   };
 
   return (
-    <div className=" bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-3">
+    <div className=" min-h-[40%] bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-3">
       <div className="max-w-md w-full bg-white rounded-xl shadow-2xl px-8 py-6">
         <div className="text-center mb-6">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Vehicle Management</h1>
@@ -106,18 +106,6 @@ const Login = () => {
             Login
           </button>
         </form>
-
-        {/* <div className="mt-8 text-center">
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <h3 className="text-sm font-semibold text-yellow-800 mb-2">Default Super Admin</h3>
-            <p className="text-xs text-yellow-700">
-              Mobile: <span className="font-mono">1234567890</span>
-              <br />
-              Password: <span className="font-mono">admin123</span>
-            </p>
-          </div>
-        </div> */}
-
         <ToastContainer />
       </div>
     </div>

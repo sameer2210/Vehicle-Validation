@@ -12,7 +12,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gray-900 shadow-md border-b border-gray-200">
+    <header className="bg-gray-900 p-4 shadow-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-4 lg:px-6">
         <div className="flex items-center justify-between py-3 sm:py-4">
           {/* Title Section */}
